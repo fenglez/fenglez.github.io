@@ -349,8 +349,7 @@
       
         
           
-            <p>jvm状态</p>
-<h4 id="dump下来jvm状态"><a href="#dump下来jvm状态" class="headerlink" title="dump下来jvm状态"></a>dump下来jvm状态</h4><pre><code class="bash">/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/bin/jstack 6366 &gt; ./dump17
+            <h4 id="dump下来jvm状态"><a href="#dump下来jvm状态" class="headerlink" title="dump下来jvm状态"></a>dump下来jvm状态</h4><pre><code class="bash">/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/bin/jstack 6366 &gt; ./dump17
 </code></pre>
 <h4 id="查看现在状态"><a href="#查看现在状态" class="headerlink" title="查看现在状态"></a>查看现在状态</h4><pre><code class="bash">grep java.lang.Thread.State dump17 | awk <span class="string">"{print <span class="variable">$2</span><span class="variable">$3</span><span class="variable">$4</span><span class="variable">$5</span>}"</span> | sort |uniq -c
 
@@ -382,6 +381,11 @@
 候，会重新从系统内存中把数据读到处理器缓存。
 </code></pre>
 <p> ####synchronized</p>
+<pre><code class="bash">1：对于普通方法，锁是当前实例对象
+2：对于静态方法，锁是当前类的Class对象
+3：对于同步方法块，锁是synchronized括号里配置的对象
+对于一个线程访问同步代码，必须先得到锁，退出或抛出异常时抛出锁。
+</code></pre>
 
           
         
@@ -901,7 +905,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+  <div class="powered-by">联系微信：zgen_link 邮箱：253222680@qq.com</div>
 
   <span class="post-meta-divider">|</span>
 
