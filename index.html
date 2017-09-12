@@ -385,6 +385,12 @@
 2：对于静态方法，锁是当前类的Class对象
 3：对于同步方法块，锁是synchronized括号里配置的对象
 对于一个线程访问同步代码，必须先得到锁，退出或抛出异常时抛出锁。
+
+java三种实现锁得方式：
+1：使用循环CAS实现原子操作。ABA问题，循环时间长开销大，只能保证一个共享变量的原子操作
+2：使用锁机制实现原子操作。
+    锁机制保证只有获得锁的过程才能操作锁定的内存区域。JVM内部实现了很多种锁机制，有偏向锁，
+轻量级锁，和互斥锁。除了偏向锁，jvm实现锁的方式都是循环CAS,加锁和释放锁都是使用该机制。
 </code></pre>
 
           
@@ -904,12 +910,6 @@
   
 </div>
 
-
-  <div class="powered-by">联系微信：zgen_link 邮箱：253222680@qq.com</div>
-
-  <span class="post-meta-divider">|</span>
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
 
 
         
