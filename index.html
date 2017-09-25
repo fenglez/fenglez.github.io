@@ -278,6 +278,150 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://oauth.club/2017/09/25/一个简单线程池实现和自定义的同步器实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jzh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fengle个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/25/一个简单线程池实现和自定义的同步器实现/" itemprop="url">一个简单线程池实现和自定义的同步器实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-25T14:27:31+08:00">
+                2017-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="1-一个简单的线程池实现"><a href="#1-一个简单的线程池实现" class="headerlink" title="1.一个简单的线程池实现"></a>1.一个简单的线程池实现</h4><p>1.基于LinkedList的线程池，没有做好同步；</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div></pre></td><td class="code"><pre><div class="line">接口定义：</div><div class="line">    public interface ThreadPool&lt;Job extends Runnable&gt; &#123;</div><div class="line">        void execute(Job job);</div><div class="line">        void shutdown();</div><div class="line">        void addWorkers(int num);</div><div class="line">        void removeWorker(int num);</div><div class="line">        int getJobSize();</div><div class="line">    &#125;</div><div class="line">具体实现：</div><div class="line">    public class DefaultThreadPool&lt;Job extends  Runnable&gt; implements ThreadPool&lt;Job&gt; &#123;</div><div class="line">        private static final int MAX_WORKER_NUMBERS = 10;</div><div class="line">        private static final int DEFAULT_WORKER_NUMBERS = 5;</div><div class="line">        private static final int MIN_WORKER_NUMBERS = 1;</div><div class="line">        private final LinkedList&lt;Job&gt; <span class="built_in">jobs</span> = new LinkedList&lt;Job&gt;();</div><div class="line">        private final List&lt;Worker&gt; workers = Collections.synchronizedList(new ArrayList&lt;Worker&gt;());</div><div class="line">        private int workerNum = DEFAULT_WORKER_NUMBERS;</div><div class="line">        private AtomicLong threadNum = new AtomicLong();</div><div class="line">        public <span class="function"><span class="title">DefaultThreadPool</span></span>() &#123;</div><div class="line">            init(DEFAULT_WORKER_NUMBERS);</div><div class="line">        &#125;</div><div class="line">    </div><div class="line">        public DefaultThreadPool(int num) &#123;</div><div class="line">            workerNum = num &gt; MAX_WORKER_NUMBERS ? MAX_WORKER_NUMBERS:num&lt;MIN_WORKER_NUMBERS?MIN_WORKER_NUMBERS:num;</div><div class="line">            init(DEFAULT_WORKER_NUMBERS);</div><div class="line">        &#125;</div><div class="line">        private void init(int defaultWorkerNumbers) &#123;</div><div class="line">            <span class="keyword">for</span> (int i= 0; i&lt; defaultWorkerNumbers; i++) &#123;</div><div class="line">                Worker worker = new Worker();</div><div class="line">                workers.add(worker);</div><div class="line">                Thread thread = new Thread(worker, <span class="string">"worker-"</span> + threadNum.incrementAndGet());</div><div class="line">                thread.start();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        public void execute(Job job) &#123;</div><div class="line">            <span class="keyword">if</span>(job!= null) &#123;</div><div class="line">                synchronized (<span class="built_in">jobs</span>) &#123;</div><div class="line">                    jobs.addLast(job);</div><div class="line">                    jobs.notify();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        public void <span class="function"><span class="title">shutdown</span></span>() &#123;</div><div class="line">            <span class="keyword">for</span>(Worker worker : workers) &#123;</div><div class="line">                worker.shutdown();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    </div><div class="line">        public void addWorkers(int num) &#123;</div><div class="line">            synchronized (<span class="built_in">jobs</span>) &#123;</div><div class="line">                <span class="keyword">if</span>(num + this.workerNum &gt; MAX_WORKER_NUMBERS) &#123;</div><div class="line">                    num = MAX_WORKER_NUMBERS - this.workerNum;</div><div class="line">                &#125;</div><div class="line">                init(num);</div><div class="line">                this.workerNum += num;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        public void removeWorker(int num) &#123;</div><div class="line">            synchronized (<span class="built_in">jobs</span>) &#123;</div><div class="line">                <span class="keyword">if</span>(num &gt;= this.workerNum) &#123;</div><div class="line">                    throw new IllegalArgumentException(<span class="string">"超过线程数量"</span>);</div><div class="line">                &#125;</div><div class="line">                int count = 0;</div><div class="line">                <span class="keyword">while</span> ( count &lt; num) &#123;</div><div class="line">                    Worker worker = workers.get(count);</div><div class="line">                    <span class="keyword">if</span>( workers.remove(worker)) &#123;</div><div class="line">                        worker.shutdown();</div><div class="line">                        count++;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                this.workerNum -= count;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        public int <span class="function"><span class="title">getJobSize</span></span>() &#123;</div><div class="line">            <span class="built_in">return</span> jobs.size();</div><div class="line">        &#125;</div><div class="line">    </div><div class="line">        class Worker implements Runnable &#123;</div><div class="line">            private volatile boolean running = <span class="literal">true</span>;</div><div class="line">            public void <span class="function"><span class="title">run</span></span>() &#123;</div><div class="line">                <span class="keyword">while</span>(running) &#123;</div><div class="line">                    Job job = null;</div><div class="line">                    synchronized (<span class="built_in">jobs</span>) &#123;</div><div class="line">                        <span class="keyword">while</span>(jobs.isEmpty()) &#123;</div><div class="line">                            try &#123;</div><div class="line">                                jobs.wait();</div><div class="line">                            &#125; catch (InterruptedException e) &#123;</div><div class="line">                                Thread.currentThread().interrupt();</div><div class="line">                                e.printStackTrace();</div><div class="line">                                <span class="built_in">return</span>;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                        job = jobs.removeFirst();</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span>(job != null) &#123;</div><div class="line">                        job.run();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">    </div><div class="line">            &#125;</div><div class="line">    </div><div class="line">            public void <span class="function"><span class="title">shutdown</span></span>() &#123;</div><div class="line">                running = <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">使用实例</div><div class="line">public class SimpleHttpServer &#123;</div><div class="line">    static ThreadPool&lt;HttpRequestHandler&gt; threadPool = new DefaultThreadPool&lt;HttpRequestHandler&gt;(1);</div><div class="line">    static String basePath;</div><div class="line">    static ServerSocket serverSocket;</div><div class="line">    static int port = 8080;</div><div class="line">    public static void setPort(int port) &#123;</div><div class="line">        <span class="keyword">if</span>(port &gt; 0) &#123;</div><div class="line">            SimpleHttpServer.port = port;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    public static void setBasePath(String basePath) &#123;</div><div class="line">        <span class="keyword">if</span>(basePath != null &amp;&amp; new File(basePath).exists() &amp;&amp; new File(basePath).isDirectory()) &#123;</div><div class="line">            SimpleHttpServer.basePath = basePath;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void start() throws Exception&#123;</div><div class="line">        serverSocket = new ServerSocket(port);</div><div class="line">        Socket socket = null;</div><div class="line">        <span class="keyword">while</span> ((socket = serverSocket.accept()) != null) &#123;</div><div class="line">            threadPool.execute(new HttpRequestHandler(socket));</div><div class="line">        &#125;</div><div class="line">        serverSocket.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    static class HttpRequestHandler implements Runnable &#123;</div><div class="line">        private Socket socket;</div><div class="line">        public HttpRequestHandler(Socket socket) &#123;</div><div class="line">            this.socket = socket;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void <span class="function"><span class="title">run</span></span>() &#123;</div><div class="line">            String line;</div><div class="line">            BufferedReader br = null;</div><div class="line">            BufferedReader reader = null;</div><div class="line">            PrintWriter out = null;</div><div class="line">            InputStream <span class="keyword">in</span> = null;</div><div class="line">            try &#123;</div><div class="line">                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));</div><div class="line">                String header = reader.readLine();</div><div class="line">                String filePath = basePath + header.split(<span class="string">" "</span>)[1];</div><div class="line">                out = new PrintWriter(socket.getOutputStream());</div><div class="line">                <span class="keyword">if</span> (filePath.endsWith(<span class="string">"jpg"</span>) || filePath.endsWith(<span class="string">"ico"</span>)) &#123;</div><div class="line">                    <span class="keyword">in</span> = new FileInputStream(filePath);</div><div class="line">                    ByteArrayOutputStream baos = new ByteArrayOutputStream();</div><div class="line">                    int i;</div><div class="line">                    <span class="keyword">while</span>((i = in.read()) != -1) &#123;</div><div class="line">                        baos.write(i);</div><div class="line">                    &#125;</div><div class="line">                    byte[] array = baos.toByteArray();</div><div class="line">                    out.println(<span class="string">"HTTP/1.1 200 OK"</span>);</div><div class="line">                    out.println(<span class="string">"Server: Molly"</span>);</div><div class="line">                    out.println(<span class="string">"Content-Type: image/jpeg"</span>);</div><div class="line">                    out.println(<span class="string">"Content-Length: "</span> + array.length);</div><div class="line">                    out.println(<span class="string">""</span>);</div><div class="line">                    socket.getOutputStream().write(array, 0, array.length);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));</div><div class="line">                    out = new PrintWriter(socket.getOutputStream());</div><div class="line">                    out.println(<span class="string">"HTTP/1.1 200 OK"</span>);</div><div class="line">                    out.println(<span class="string">"Server: Molly"</span>);</div><div class="line">                    out.println(<span class="string">"Content-Type: text/html;charset= UTF-8"</span>);</div><div class="line">                    out.println(<span class="string">""</span>);</div><div class="line">                    <span class="keyword">while</span> ((line = br.readLine()) != null) &#123;</div><div class="line">                        out.println(line);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                out.flush();</div><div class="line">            &#125; catch (IOException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">                out.println(<span class="string">"HTTP/1.1 500"</span>);</div><div class="line">                out.println(<span class="string">""</span>);</div><div class="line">                out.flush();</div><div class="line">            &#125; finally &#123;</div><div class="line">                close(br,<span class="keyword">in</span>,reader,out,socket);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        private void close(Closeable... closeables) &#123;</div><div class="line">            <span class="keyword">if</span> (closeables != null) &#123;</div><div class="line">                <span class="keyword">for</span> (Closeable closeable : closeables) &#123;</div><div class="line">                    try &#123;</div><div class="line">                        closeable.close();</div><div class="line">                    &#125; catch (Exception ex) &#123;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-自定义同步器"><a href="#2-自定义同步器" class="headerlink" title="2.自定义同步器"></a>2.自定义同步器</h4><p>1.实现两个线程可访问的同步器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">同步器实现：</div><div class="line">    public class TwinsLock implements Lock &#123;</div><div class="line">    </div><div class="line">        private final Sync sync = new Sync(2);</div><div class="line">        private static final class  Sync extends AbstractQueuedSynchronizer &#123;</div><div class="line">            Sync(int count) &#123;</div><div class="line">                setState(count);</div><div class="line">            &#125;</div><div class="line">    </div><div class="line">            public int tryAcquireShared(int reduceCount) &#123;</div><div class="line">                <span class="keyword">for</span> (;;) &#123;</div><div class="line">                    int current = getState();</div><div class="line">                    int newCount = current - reduceCount;</div><div class="line">                    <span class="keyword">if</span>(newCount &lt; 0 || compareAndSetState(current,newCount)) &#123;</div><div class="line">                        <span class="built_in">return</span> newCount;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            public boolean tryReleaseShared(int returnCount) &#123;</div><div class="line">                <span class="keyword">for</span> (;;) &#123;</div><div class="line">                    int current = getState();</div><div class="line">                    int newCount = current + returnCount;</div><div class="line">                    <span class="keyword">if</span>(compareAndSetState(current, newCount)) &#123;</div><div class="line">                        <span class="built_in">return</span> <span class="literal">true</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        public void <span class="function"><span class="title">lock</span></span>() &#123;</div><div class="line">            sync.acquireShared(1);</div><div class="line">    </div><div class="line">        &#125;</div><div class="line">    </div><div class="line">        public void lockInterruptibly() throws InterruptedException &#123;</div><div class="line">    </div><div class="line">        &#125;</div><div class="line">    </div><div class="line">        public boolean <span class="function"><span class="title">tryLock</span></span>() &#123;</div><div class="line">            <span class="built_in">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    </div><div class="line">        public boolean tryLock(long time, TimeUnit unit) throws InterruptedException &#123;</div><div class="line">            <span class="built_in">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    </div><div class="line">        public void <span class="function"><span class="title">unlock</span></span>() &#123;</div><div class="line">            sync.releaseShared(1);</div><div class="line">        &#125;</div><div class="line">    </div><div class="line">        public Condition <span class="function"><span class="title">newCondition</span></span>() &#123;</div><div class="line">            <span class="built_in">return</span> null;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">测试实例</div><div class="line">    public class TwinsLockTest &#123;</div><div class="line">        public static void main(String[] args) &#123;</div><div class="line">            final Lock lock = new TwinsLock();</div><div class="line">            class Worker extends Thread &#123;</div><div class="line">                public void <span class="function"><span class="title">run</span></span>() &#123;</div><div class="line">                    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</div><div class="line">                        lock.lock();</div><div class="line">                        try &#123;</div><div class="line">                            Thread.sleep(1000);</div><div class="line">                            System.out.println(Thread.currentThread().getName());</div><div class="line">                            Thread.sleep(1000);</div><div class="line">                        &#125; catch (InterruptedException e) &#123;</div><div class="line">                            e.printStackTrace();</div><div class="line">                        &#125; finally &#123;</div><div class="line">                            lock.unlock();</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">for</span>(int i =0; i&lt; 10;i++) &#123;</div><div class="line">                Worker w = new Worker();</div><div class="line">                w.setDaemon(<span class="literal">true</span>);</div><div class="line">                w.start();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">for</span>(int i =0; i&lt; 10;i++) &#123;</div><div class="line">                try &#123;</div><div class="line">                    Thread.sleep(1000);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">                System.out.println();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://oauth.club/2017/09/20/java类加载器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1074,7 +1218,7 @@ java三种实现锁得方式：
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
