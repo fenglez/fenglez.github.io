@@ -95,17 +95,17 @@
 
 
 
-<meta name="description" content="dump下来jvm状态/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/bin/jstack 6366 &amp;gt; ./dump17  查看现在状态grep java.lang.Thread.State dump17 | awk &quot;{print $2$3$4$5}&quot; | sort |uniq -c    17    ja">
+<meta name="description" content="1.简介Borg（来自Google），YARN（来自Apache，属于Hadoop下面的一个分支，开源），Mesos（来自Twitter，开源），Torca（来自腾讯搜搜），Corona（来自Facebook，开源）这一类系统被称为资源统一管理系统或者资源统一调度系统。 2.作用它们是大数据时代的必然产物。概括起来，这类系统设计动机是解决以下两类问题：（1） 提高集群资源利用率在大数据时代，为了存">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dump jvm 线程状态">
-<meta property="og:url" content="http://oauth.club/2017/09/05/dump-jvm-线程状态/index.html">
+<meta property="og:title" content="spark资源管理">
+<meta property="og:url" content="http://oauth.club/2017/12/02/spark资源管理/index.html">
 <meta property="og:site_name" content="fengle个人博客">
-<meta property="og:description" content="dump下来jvm状态/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/bin/jstack 6366 &amp;gt; ./dump17  查看现在状态grep java.lang.Thread.State dump17 | awk &quot;{print $2$3$4$5}&quot; | sort |uniq -c    17    ja">
+<meta property="og:description" content="1.简介Borg（来自Google），YARN（来自Apache，属于Hadoop下面的一个分支，开源），Mesos（来自Twitter，开源），Torca（来自腾讯搜搜），Corona（来自Facebook，开源）这一类系统被称为资源统一管理系统或者资源统一调度系统。 2.作用它们是大数据时代的必然产物。概括起来，这类系统设计动机是解决以下两类问题：（1） 提高集群资源利用率在大数据时代，为了存">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-12-29T06:30:20.131Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="dump jvm 线程状态">
-<meta name="twitter:description" content="dump下来jvm状态/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/bin/jstack 6366 &amp;gt; ./dump17  查看现在状态grep java.lang.Thread.State dump17 | awk &quot;{print $2$3$4$5}&quot; | sort |uniq -c    17    ja">
+<meta name="twitter:title" content="spark资源管理">
+<meta name="twitter:description" content="1.简介Borg（来自Google），YARN（来自Apache，属于Hadoop下面的一个分支，开源），Mesos（来自Twitter，开源），Torca（来自腾讯搜搜），Corona（来自Facebook，开源）这一类系统被称为资源统一管理系统或者资源统一调度系统。 2.作用它们是大数据时代的必然产物。概括起来，这类系统设计动机是解决以下两类问题：（1） 提高集群资源利用率在大数据时代，为了存">
 
 
 
@@ -135,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://oauth.club/2017/09/05/dump-jvm-线程状态/"/>
+  <link rel="canonical" href="http://oauth.club/2017/12/02/spark资源管理/"/>
 
 
 
 
 
-  <title>dump jvm 线程状态 | fengle个人博客</title>
+  <title>spark资源管理 | fengle个人博客</title>
   
 
 
@@ -278,7 +278,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://oauth.club/2017/09/05/dump-jvm-线程状态/">
+    <link itemprop="mainEntityOfPage" href="http://oauth.club/2017/12/02/spark资源管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jzh">
@@ -295,7 +295,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">dump jvm 线程状态</h1>
+          <h1 class="post-title" itemprop="name headline">spark资源管理</h1>
         
 
         <div class="post-meta">
@@ -307,8 +307,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T19:43:55+08:00">
-                2017-09-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-02T16:28:09+08:00">
+                2017-12-02
               </time>
             
 
@@ -330,8 +330,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
+                  <a href="/categories/spark/" itemprop="url" rel="index">
+                    <span itemprop="name">spark</span>
                   </a>
                 </span>
 
@@ -372,49 +372,9 @@
       
 
       
-        <h4 id="dump下来jvm状态"><a href="#dump下来jvm状态" class="headerlink" title="dump下来jvm状态"></a>dump下来jvm状态</h4><pre><code class="bash">/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/bin/jstack 6366 &gt; ./dump17
-</code></pre>
-<h4 id="查看现在状态"><a href="#查看现在状态" class="headerlink" title="查看现在状态"></a>查看现在状态</h4><pre><code class="bash">grep java.lang.Thread.State dump17 | awk <span class="string">"{print <span class="variable">$2</span><span class="variable">$3</span><span class="variable">$4</span><span class="variable">$5</span>}"</span> | sort |uniq -c
-
-  17    java.lang.Thread.State: RUNNABLE
-   4    java.lang.Thread.State: TIMED_WAITING (on object monitor)
-  35    java.lang.Thread.State: TIMED_WAITING (parking)
-  10    java.lang.Thread.State: TIMED_WAITING (sleeping)
-   2    java.lang.Thread.State: WAITING (on object monitor)
-  11    java.lang.Thread.State: WAITING (parking)
-</code></pre>
-<p>####死锁</p>
-<pre><code class="bash">死锁的状态：java.lang.Thread.State:BLOCKED
-死锁避免：
-   避免一个线程同时获取多个锁
-   避免一个线程在锁内同时占用多个资源，尽量保证每个锁只占用一个资源
-   尝试使用定时锁，使用lock.tryLock（timeout）来替代使用内部锁机制
-   对于数据库锁，加解锁必须在一个数据库连接里，否则会出现解锁失败的情况
-</code></pre>
-<p> ####volatile</p>
-<pre><code class="bash">    有该变量修饰的共享变量进行写操作的时候会多出lock add1 <span class="variable">$0</span>...汇编代码，lock前缀的指令在多核处理
-器下回引发两件事情。
-1：将当前处理器缓存行的数据回写到系统内存；
-2：这个写回内存的操作会使在其他cpu缓存了该内存地址的数据无效。
-    为了提高处理速度，处理器不直接和内存进行通信，而是将系统内存的数据读到内部缓存后再进行操作，但操
-做完了不知道何时会写到内存。如果对声明了volatile的变量进行写操作，jvm就会向处理器发送一条lock前缀的
-指令，将这个变量所在缓存行的数据写回到系统内存。在多处理器下，为了保证各个处理器的缓存是一致的，就会实
-现缓存一致性协议，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己
-缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器对这个数据进行修改操作的时
-候，会重新从系统内存中把数据读到处理器缓存。
-</code></pre>
-<p> ####synchronized</p>
-<pre><code class="bash">1：对于普通方法，锁是当前实例对象
-2：对于静态方法，锁是当前类的Class对象
-3：对于同步方法块，锁是synchronized括号里配置的对象
-对于一个线程访问同步代码，必须先得到锁，退出或抛出异常时抛出锁。
-
-java三种实现锁得方式：
-1：使用循环CAS实现原子操作。ABA问题，循环时间长开销大，只能保证一个共享变量的原子操作
-2：使用锁机制实现原子操作。
-    锁机制保证只有获得锁的过程才能操作锁定的内存区域。JVM内部实现了很多种锁机制，有偏向锁，
-轻量级锁，和互斥锁。除了偏向锁，jvm实现锁的方式都是循环CAS,加锁和释放锁都是使用该机制。
-</code></pre>
+        <h4 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h4><p>Borg（来自Google），YARN（来自Apache，属于Hadoop下面的一个分支，开源），<br>Mesos（来自Twitter，开源），<br>Torca（来自腾讯搜搜），<br>Corona（来自Facebook，开源）这一类系统被称为资源统一管理系统或者资源统一调度系统。</p>
+<h4 id="2-作用"><a href="#2-作用" class="headerlink" title="2.作用"></a>2.作用</h4><p>它们是大数据时代的必然产物。概括起来，这类系统设计动机是解决以下两类问题：<br>（1） 提高集群资源利用率<br>在大数据时代，为了存储和处理海量数据，需要规模较大的服务器集群或者数据中心，<br>一般说来，这些集群上运行着数量众多类型纷杂的应用程序和服务，<br>比如离线作业，流式作业，迭代式作业，crawler server，web server等，<br>传统的做法是，每种类型的作业或者服务对应一个单独的集群，以避免相互干扰。<br>这样，集群被分割成数量众多的小集群，有的集群运行Hadoop，有的运行Storm，<br>有的运行Spark，有的运行web server，然而，由于不同类型的作业/服务需要的资源量不同，<br>因此，这些小集群的利用率通常很不均衡，有的集群满负荷、资源紧张，而另外一些则长时间闲置、<br>资源利用率极低，为了提高资源整体利用率，一种解决方案是将这些小集群合并成一个大集群，<br>让它们共享这个大集群的资源，并由一个资源统一调度系统进行资源管理和分配，<br>这就诞生了Borg，YARN，Mesos，Torca，Corona。从集群共享角度看，<br>这类系统实际上将公司的所有硬件资源抽象成一个台大型计算机，供所有用户使用。<br>（2） 服务自动化部署<br>一旦将所有计算资源抽象成一个“大型计算机”后，就会产生一个问题：公司的各种服务如何进行部署？<br>同样，Borg/YARN/Mesos/Torca/Corona一类系统需要具备服务自动化部署的功能，<br>因此，从服务部署的角度看，这类系统实际上是服务统一管理系统，这类系统提供服务资源申请，<br>服务自动化部署，服务容错等动能。</p>
+<h4 id="3-产生背景"><a href="#3-产生背景" class="headerlink" title="3.产生背景"></a>3.产生背景</h4><p>以上只是简单的介绍了这一类系统的设计动机和产生背景，接下来从两个角度解析这类系统。<br>角度一：数据中心编程<br>任何一个公司内部所有的硬件资源均可看做一个数据中心，通过Borg/YARN/Mesos/Torca/Corona一类<br>系统对这些资源进行统一管理后，用户所有的程序和服务将通过一个统一入口进入数据中心，并由这类系<br>统为之分配资源、监控程序和服务运行状态，并在失败时启用必要的容错机制，汇报程序的执行进度等<br>，而至于应用程序或者服务运行在具体哪台机器上，所在机器的ip、端口号是什么，则用户无需管理，<br>全部交由统一管理系统进行管理（用户也许可以查询到）。<br>具体说来，采用此类系统之后，当用户执行应用程序或者部署服务时，只需通过一个配置文件描述应用<br>程序或服务需要的资源（比如CPU、内存、磁盘、操作系统类型等）、待执行的命令、依赖的外部文件等<br>信息，然后通过一个客户端提交到Borg/YARN/Mesos/Torca/Corona上，剩下的工作则完全交给系统。<br>角度二：生态系统<br>从另外一个角度看，Borg/YARN/Mesos/Torca/Corona一类系统可以为公司构建一个内部的生态系统<br>，所有应用程序和服务可以“和平而友好”地运行在该生态系统上。有了这类系统之后，你不必忧愁使用<br>Hadoop的哪个版本，是Hadoop 0.20.2还是 Hadoop 1.0，你也不必为选择何种计算模型而苦恼，因<br>此各种软件版本，各种计算模型可以一起运行在一台“超级计算机”上了。<br>从开源角度看，YARN的提出，从一定程度上弱化了多计算框架的优劣之争。YARN是在Hadoop MapReduce<br>基础上演化而来的，在MapReduce时代，很多人批评MapReduce不适合迭代计算和流失计算，于是出<br>现了Spark和Storm等计算框架，而这些系统的开发者则在自己的网站上或者论文里与MapReduce对比，<br>鼓吹自己的系统多么先进高效，而出现了YARN之后，则形势变得明朗：MapReduce只是运行在YARN之上<br>的一类应用程序抽象，Spark和Storm本质上也是，他们只是针对不同类型的应用开发的，没有优劣之别，<br>各有所长，合并共处，而且，今后所有计算框架的开发，不出意外的话，也应是在YARN之上。这样，一个<br>以YARN为底层资源管理平台，多种计算框架运行于其上的生态系统诞生了。</p>
 
       
     </div>
@@ -435,7 +395,7 @@ java三种实现锁得方式：
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://oauth.club/2017/09/05/dump-jvm-线程状态/" title="dump jvm 线程状态">http://oauth.club/2017/09/05/dump-jvm-线程状态/</a>
+    <a href="http://oauth.club/2017/12/02/spark资源管理/" title="spark资源管理">http://oauth.club/2017/12/02/spark资源管理/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -457,8 +417,8 @@ java三种实现锁得方式：
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/03/生产者／消费者/" rel="next" title="生产者／消费者">
-                <i class="fa fa-chevron-left"></i> 生产者／消费者
+              <a href="/2017/09/25/一个简单线程池实现和自定义的同步器实现/" rel="next" title="一个简单线程池实现和自定义的同步器实现">
+                <i class="fa fa-chevron-left"></i> 一个简单线程池实现和自定义的同步器实现
               </a>
             
           </div>
@@ -467,8 +427,8 @@ java三种实现锁得方式：
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/15/哪些经验的句子/" rel="prev" title="哪些惊艳的句子">
-                哪些惊艳的句子 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/12/02/mac上搭建单机spark运算环境/" rel="prev" title="mac上搭建单机spark运算环境">
+                mac上搭建单机spark运算环境 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -610,7 +570,7 @@ java三种实现锁得方式：
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#dump下来jvm状态"><span class="nav-number">1.</span> <span class="nav-text">dump下来jvm状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看现在状态"><span class="nav-number">2.</span> <span class="nav-text">查看现在状态</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简介"><span class="nav-number">1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-作用"><span class="nav-number">2.</span> <span class="nav-text">2.作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-产生背景"><span class="nav-number">3.</span> <span class="nav-text">3.产生背景</span></a></li></ol></div>
             
 
           </div>
